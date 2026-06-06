@@ -1,5 +1,5 @@
 import app from "./app";
 
 app.listen(3000, () => {
-  console.log("live...");
+  console.log("Server is up and listening...");
 });
