@@ -1,0 +1,56 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: zync
+      POSTGRES_USER: zync
+      POSTGRES_PASSWORD: zync
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U zync -d zync"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  server:
+    build:
+      context: .
+      dockerfile: apps/server/Dockerfile
+      target: development
+    command: pnpm --filter server dev
+    environment:
+      PORT: 3000
+      DATABASE_URL: postgresql://zync:zync@postgres:5432/zync
+      BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET:-change-me-in-development}
+      BETTER_AUTH_URL: http://localhost:3000
+      GITHUB_CLIENT_ID: ${GITHUB_CLIENT_ID:-docker-development-client-id}
+      GITHUB_CLIENT_SECRET: ${GITHUB_CLIENT_SECRET:-docker-development-client-secret}
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./apps/server/src:/app/apps/server/src
+      - ./apps/server/prisma:/app/apps/server/prisma
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  client:
+    build:
+      context: .
+      dockerfile: apps/client/Dockerfile
+      target: development
+    command: pnpm --filter client dev --host 0.0.0.0
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./apps/client/src:/app/apps/client/src
+      - ./apps/client/index.html:/app/apps/client/index.html
+    depends_on:
+      - server
+
+volumes:
+  postgres_data:

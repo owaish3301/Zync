@@ -1,0 +1,10 @@
+.git
+.turbo
+**/.turbo
+node_modules
+**/node_modules
+**/dist
+apps/client/.vite
+apps/server/.env
+*.log
+

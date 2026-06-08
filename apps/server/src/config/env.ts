@@ -1,3 +1,5 @@
+import "dotenv/config";
+
 const validEnv = (env: string): string => {
   const value = process.env[env];
   if (!value) {
@@ -6,7 +8,7 @@ const validEnv = (env: string): string => {
   return value;
 };
 
-const PORT = validEnv("PORT");
+const PORT = Number(validEnv("PORT"));
 const DATABASE_URL = validEnv("DATABASE_URL");
 const GITHUB_CLIENT_ID = validEnv("GITHUB_CLIENT_ID");
 const GITHUB_CLIENT_SECRET = validEnv("GITHUB_CLIENT_SECRET");
