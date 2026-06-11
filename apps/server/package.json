@@ -19,7 +19,8 @@
     "@prisma/client": "^7.8.0",
     "better-auth": "^1.6.14",
     "dotenv": "^17.4.2",
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "@repo/validators": "workspace:*"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",

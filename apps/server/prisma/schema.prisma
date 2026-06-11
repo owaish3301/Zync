@@ -25,7 +25,7 @@ model User {
   sessions        Session[]
   accounts        Account[]
 
-  whiteListEmails WhiteListEmail[]
+  whiteListEmails WhitelistEmail[]
   userProfile     UserProfile?
 
   @@unique([email])
@@ -102,7 +102,7 @@ enum Role {
   MODERATOR
 }
 
-model WhiteListEmail {
+model WhitelistEmail {
   id              String   @id @default(uuid())
   email           String   @unique
   whitelistedAt   DateTime @default(now())
