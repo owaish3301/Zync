@@ -12,10 +12,10 @@
   --meta: oklch(0.5 0.012 260);
   --border: oklch(1 0 0 / 8%);
   --border-soft: oklch(1 0 0 / 5%);
-  --accent: oklch(0.59 0.16 275);
-  --accent-foreground: oklch(0.98 0.004 275);
-  --accent-hover: oklch(0.69 0.16 275);
-  --accent-active: oklch(0.52 0.16 275);
+  --accent: oklch(0.92 0.008 260);
+  --accent-foreground: oklch(0.18 0.008 260);
+  --accent-hover: oklch(0.97 0.005 260);
+  --accent-active: oklch(0.86 0.01 260);
   --success: oklch(0.65 0.17 145);
   --warning: oklch(0.8 0.17 85);
   --danger: oklch(0.61 0.22 27);
@@ -82,5 +82,17 @@
   :focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 3px;
+  }
+}
+
+@keyframes auth-rise {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

@@ -21,10 +21,10 @@ const withPasswordToggle = (Component: ComponentType<InputProps>) => {
           type="button"
           aria-label={showPassword ? "Hide password" : "Show password"}
           aria-pressed={showPassword}
-          className="absolute right-3 bottom-2 flex h-7 w-7 items-center justify-center text-meta hover:text-foreground"
+          className="absolute bottom-2 right-2 flex h-8 w-8 items-center justify-center rounded-lg text-meta transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-white/4.5 hover:text-foreground active:scale-95"
           onClick={() => setShowPassword((current) => !current)}
         >
-          {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+          {showPassword ? <EyeOff size={17} /> : <Eye size={17} />}
         </button>
       </div>
     );

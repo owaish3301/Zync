@@ -11,13 +11,16 @@ export const LabelledInput = ({ id, label, ...props }: InputProps) => {
   const { className, ...inputProps } = props;
 
   return (
-    <div className="flex flex-col mb-4">
-      <label className="text-sm" htmlFor={inputId}>
+    <div className="mb-4 flex flex-col">
+      <label
+        className="mb-2 text-[13px] font-medium text-foreground-secondary"
+        htmlFor={inputId}
+      >
         {label}
       </label>
       <input
         id={inputId}
-        className={`bg-foreground/2 border border-border rounded mt-2 px-4 py-2 h-11 ${className ?? ""}`}
+        className={`h-11 rounded-xl border border-white/8 bg-background/55 px-3.5 py-2 text-[15px] text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.025)] transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] placeholder:text-meta hover:border-white/12 focus:border-accent/55 focus:bg-background/70 focus:outline-none focus:ring-2 focus:ring-accent/6 ${className ?? ""}`}
         {...inputProps}
       />
     </div>
