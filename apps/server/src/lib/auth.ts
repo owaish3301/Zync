@@ -2,7 +2,11 @@ import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { username } from "better-auth/plugins";
 import { prisma } from "./prisma";
-import { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } from "../config/env";
+import {
+  FRONTEND_ORIGIN,
+  GITHUB_CLIENT_ID,
+  GITHUB_CLIENT_SECRET,
+} from "../config/env";
 import { APIError, createAuthMiddleware } from "better-auth/api";
 import { emailSchema } from "@repo/validators";
 
@@ -20,11 +24,16 @@ export const auth = betterAuth({
     },
   },
   plugins: [username()],
-  trustedOrigins: ["http://localhost:5173"],
+  trustedOrigins: [FRONTEND_ORIGIN],
   hooks: {
     before: createAuthMiddleware(async (ctx) => {
       if (ctx.path !== "/sign-up/email") {
         return;
+      }
+      if (!ctx.body || !("email" in ctx.body)) {
+        throw new APIError("BAD_REQUEST", {
+          message: "Email is required.",
+        });
       }
       const parsedEmail = emailSchema.safeParse(ctx.body.email);
       if (!parsedEmail.success) {

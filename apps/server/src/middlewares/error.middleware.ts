@@ -11,6 +11,9 @@ export const globalErrorHandler = (
   res: Response,
   _next: NextFunction,
 ) => {
+  if (res.headersSent) {
+    return;
+  }
   console.error(err);
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({ message: err.message });

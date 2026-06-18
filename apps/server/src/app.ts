@@ -4,10 +4,11 @@ import { auth } from "./lib/auth";
 import { onboardingRouter } from "./routes/onboarding.routes";
 import { globalErrorHandler } from "./middlewares/error.middleware";
 import cors from "cors";
+import { FRONTEND_ORIGIN } from "./config/env";
 
 const app: Express = express();
 
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(cors({ origin: FRONTEND_ORIGIN, credentials: true }));
 
 app.all("/api/auth/{*any}", toNodeHandler(auth));
 

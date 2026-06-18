@@ -101,6 +101,11 @@ const Signup = () => {
       }
     } catch (e) {
       console.error(e);
+      setError((prev) => ({
+        ...prev,
+        email:
+          "We could not check your invite status right now. Please check your connection and try again.",
+      }));
     } finally {
       setLoading(false);
     }
@@ -110,6 +115,7 @@ const Signup = () => {
     e: SyntheticEvent<HTMLFormElement, SubmitEvent>,
   ) => {
     e.preventDefault();
+    setLoading(true);
     await authClient.signUp.email({
       email: formData.email,
       password: formData.password,
@@ -117,9 +123,11 @@ const Signup = () => {
       username: formData.username,
       fetchOptions: {
         onSuccess() {
+          setLoading(false);
           navigate("/dashboard");
         },
         onError(ctx) {
+          setLoading(false);
           setError((prev) => ({ ...prev, signupError: ctx.error.message }));
         },
       },
