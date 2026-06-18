@@ -1,3 +1,4 @@
+import { authClient } from "@/lib/auth-client";
 import {
   Button,
   ContinueWithGithub,
@@ -5,8 +6,13 @@ import {
   PasswordLabelledInput,
   LabelledInput,
 } from "@repo/ui";
-import { useState, type ChangeEvent, type MouseEvent } from "react";
-import { Link } from "react-router";
+import {
+  useState,
+  type ChangeEvent,
+  type MouseEvent,
+  type SyntheticEvent,
+} from "react";
+import { Link, useNavigate } from "react-router";
 
 type SigninData = {
   email: string;
@@ -19,12 +25,29 @@ const Login = () => {
     password: "",
   });
 
+  const [error, setError] = useState<string | null>(null);
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
+  const navigate = useNavigate();
+  const handleSubmit = async (
+    e: SyntheticEvent<HTMLFormElement, SubmitEvent>,
+  ) => {
     e.preventDefault();
+    await authClient.signIn.email({
+      email: formData.email,
+      password: formData.password,
+      fetchOptions: {
+        onSuccess() {
+          navigate("/dashboard");
+        },
+        onError(ctx) {
+          setError(ctx.error.message);
+        },
+      },
+    });
   };
 
   return (
@@ -39,7 +62,7 @@ const Login = () => {
         <div>
           <ContinueWithGithub />
           <Divider />
-          <form autoComplete="on">
+          <form autoComplete="on" onSubmit={handleSubmit}>
             <LabelledInput
               id="email"
               label="Email"
@@ -61,10 +84,19 @@ const Login = () => {
               onChange={handleChange}
             />
 
+            {error && (
+              <p
+                id="login-error"
+                role="alert"
+                className="-mt-2 mb-4 text-sm text-red-400"
+              >
+                {error}
+              </p>
+            )}
+
             <Button
               type="submit"
               className="mt-7 flex min-h-11 w-full cursor-pointer items-center justify-center rounded-xl border border-white/15 bg-accent px-4 py-2.5 text-sm font-medium text-accent-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.55),0_1px_2px_rgba(0,0,0,0.28)] transition-[background-color,border-color,box-shadow,transform] duration-200 ease-out hover:border-white/25 hover:bg-accent-hover hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.7),0_2px_5px_rgba(0,0,0,0.32)] active:scale-[0.99] active:bg-accent-active disabled:pointer-events-none disabled:opacity-50"
-              onClick={handleSubmit}
             >
               Sign in
             </Button>

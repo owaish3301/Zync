@@ -3,3 +3,4 @@ export { default as Divider } from "./components/auth/Divider";
 export { Button } from "./ui/Button";
 export { default as PasswordLabelledInput } from "./components/auth/PasswordLabelledInput";
 export { LabelledInput } from "./ui/LabelledInput";
+export { default as Loader } from "./components/Loader";

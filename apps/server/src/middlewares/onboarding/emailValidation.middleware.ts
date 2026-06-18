@@ -9,6 +9,9 @@ export const emailValidation = (
 ) => {
   try {
     const { email } = req.body;
+    if (!email) {
+      throw new ValidationError("Email is required.");
+    }
     const parsed = emailSchema.safeParse(email);
     if (!parsed.success) {
       throw new ValidationError("Invalid email.");
