@@ -88,7 +88,7 @@ model UserProfile {
   deletedAt DateTime?
 
   userId    String        @unique
-  user      User          @relation(fields: [userId], references: [id])
+  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 enum AccountStatus {
@@ -107,6 +107,6 @@ model WhitelistEmail {
   email           String   @unique
   whitelistedAt   DateTime @default(now())
 
-  whitelistedByUserId String
-  whitelistedBy   User     @relation(fields: [whitelistedByUserId], references: [id])
+  whitelistedByUserId String?
+  whitelistedBy   User?     @relation(fields: [whitelistedByUserId], references: [id], onDelete: SetNull)
 }

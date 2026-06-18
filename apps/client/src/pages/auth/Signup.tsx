@@ -101,6 +101,10 @@ const Signup = () => {
       }
     } catch (e) {
       console.error(e);
+      setError((prev) => ({
+        ...prev,
+        email: "Failed to verify email. Please try again.",
+      }));
     } finally {
       setLoading(false);
     }
@@ -110,6 +114,7 @@ const Signup = () => {
     e: SyntheticEvent<HTMLFormElement, SubmitEvent>,
   ) => {
     e.preventDefault();
+    setLoading(true);
     await authClient.signUp.email({
       email: formData.email,
       password: formData.password,
@@ -117,9 +122,11 @@ const Signup = () => {
       username: formData.username,
       fetchOptions: {
         onSuccess() {
+          setLoading(false);
           navigate("/dashboard");
         },
         onError(ctx) {
+          setLoading(false);
           setError((prev) => ({ ...prev, signupError: ctx.error.message }));
         },
       },

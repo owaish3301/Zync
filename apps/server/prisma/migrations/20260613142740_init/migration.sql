@@ -80,9 +80,10 @@ CREATE TABLE "WhitelistEmail" (
     "id" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "whitelistedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "whitelistedByUserId" TEXT NOT NULL,
+    "whitelistedByUserId" TEXT,
 
-    CONSTRAINT "WhitelistEmail_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "WhitelistEmail_pkey" PRIMARY KEY ("id"),
+    CONSTRAINT "WhitelistEmail_email_lowercase_check" CHECK (email = LOWER(email))
 );
 
 -- CreateIndex
@@ -116,7 +117,7 @@ ALTER TABLE "session" ADD CONSTRAINT "session_userId_fkey" FOREIGN KEY ("userId"
 ALTER TABLE "account" ADD CONSTRAINT "account_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "UserProfile" ADD CONSTRAINT "UserProfile_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "UserProfile" ADD CONSTRAINT "UserProfile_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "WhitelistEmail" ADD CONSTRAINT "WhitelistEmail_whitelistedByUserId_fkey" FOREIGN KEY ("whitelistedByUserId") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "WhitelistEmail" ADD CONSTRAINT "WhitelistEmail_whitelistedByUserId_fkey" FOREIGN KEY ("whitelistedByUserId") REFERENCES "user"("id") ON DELETE SET NULL ON UPDATE CASCADE;

@@ -24,6 +24,7 @@ const Login = () => {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    setError(null);
   };
 
   const navigate = useNavigate();
