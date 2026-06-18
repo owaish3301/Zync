@@ -9,7 +9,8 @@
   },
   "include": [
     "src",
-    "generated"
+    "generated",
+    "scripts"
   ],
   "exclude": [
     "node_modules",
