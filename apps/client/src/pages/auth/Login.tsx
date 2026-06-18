@@ -6,12 +6,7 @@ import {
   PasswordLabelledInput,
   LabelledInput,
 } from "@repo/ui";
-import {
-  useState,
-  type ChangeEvent,
-  type MouseEvent,
-  type SyntheticEvent,
-} from "react";
+import { useState, type ChangeEvent, type SyntheticEvent } from "react";
 import { Link, useNavigate } from "react-router";
 
 type SigninData = {

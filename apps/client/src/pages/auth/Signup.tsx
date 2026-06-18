@@ -96,7 +96,7 @@ const Signup = () => {
         setError((prev) => ({
           ...prev,
           email:
-            "This email is not on the invite list. Please use an invited email address to sign up.",
+            "Can not signup with this email. Try again with an email thats been invited to join zync.",
         }));
       }
     } catch (e) {
