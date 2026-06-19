@@ -1,4 +1,5 @@
 import { authClient } from "@/lib/auth-client";
+import { continueWithGithub } from "@/lib/continueWithGithub";
 import {
   Button,
   ContinueWithGithub,
@@ -56,7 +57,7 @@ const Login = () => {
 
       <main className="mt-6">
         <div>
-          <ContinueWithGithub />
+          <ContinueWithGithub onClick={continueWithGithub} />
           <Divider />
           <form autoComplete="on" onSubmit={handleSubmit}>
             <LabelledInput

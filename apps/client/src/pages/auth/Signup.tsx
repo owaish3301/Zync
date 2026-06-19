@@ -11,6 +11,7 @@ import { Link, useNavigate } from "react-router";
 import axios from "axios";
 import { emailSchema } from "@repo/validators";
 import { authClient } from "@/lib/auth-client";
+import { continueWithGithub } from "@/lib/continueWithGithub";
 
 type SignupData = {
   email: string;
@@ -143,7 +144,7 @@ const Signup = () => {
       </header>
       <main className="mt-6">
         <div>
-          <ContinueWithGithub />
+          <ContinueWithGithub onClick={continueWithGithub} />
           <Divider />
 
           {stage === 1 && (
