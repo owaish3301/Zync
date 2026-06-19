@@ -22,6 +22,7 @@ const bootstrapSuperAdmin = async (
 
   const cleanEmail = emailSchema.parse(email);
 
+  process.env.ZYNC_BOOTSTRAP_SUPER_ADMIN = "true";
   const signUpResult = await auth.api.signUpEmail({
     body: {
       email: cleanEmail,
@@ -40,9 +41,16 @@ const bootstrapSuperAdmin = async (
     data: {
       emailVerified: true,
       userProfile: {
-        create: {
-          role: Role.ADMIN,
-          status: AccountStatus.ACTIVE,
+        upsert: {
+          create: {
+            role: Role.ADMIN,
+            status: AccountStatus.ACTIVE,
+          },
+          update: {
+            role: Role.ADMIN,
+            status: AccountStatus.ACTIVE,
+            deletedAt: null,
+          },
         },
       },
     },
